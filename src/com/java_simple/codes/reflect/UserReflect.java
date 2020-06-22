@@ -24,7 +24,29 @@ public class UserReflect {
 
 
         //测试反射 类中的API
-        testReflectClassAPI();
+//        testReflectClassAPI();
+
+        testReflectMethod();
+    }
+
+    private static void testReflectMethod() {
+
+        try {
+            Class<?> clazz = Class.forName("com.java_simple.codes.reflect.User");
+            User user = new User();
+
+            Method[] methods = clazz.getDeclaredMethods();
+            for(Method md:methods){
+                PKt.out(md.toString()+", isSynthetic = "+md.isSynthetic());
+            }
+
+            PKt.out(" getTypeName() =  "+clazz.getTypeName());
+            PKt.out(" getTypeName() =  "+clazz.getTypeParameters());
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private static void testReflectClassAPI() {
@@ -38,15 +60,69 @@ public class UserReflect {
             for (Class<?> c : classes){
                 PKt.out("类名 ： "+c.getSimpleName());
             }
+            // 判断传入的对象 是否是 此class 的实例对象
+            User user = new User();
+            boolean isInstance = clazz.isInstance(user);
+            PKt.out("inStance = "+isInstance);
+
+            // --测试-isAssignableFrom()-----------
+            User user1 = new User();
+            Person person = new Person();
+            Person absPerson = new User();
+
+            PKt.out("--------------begin---------------");
+
+            PKt.out(User.class.isAssignableFrom(user1.getClass()));
+            PKt.out(Person.class.isAssignableFrom(person.getClass()));
+
+            PKt.out(Person.class.isAssignableFrom(user1.getClass()));
+            PKt.out(User.class.isAssignableFrom(person.getClass()));
+
+            PKt.out(Person.class.isAssignableFrom(absPerson.getClass()));
+            PKt.out(User.class.isAssignableFrom(absPerson.getClass()));
+
+            PKt.out("--------------1---------------");
+
+            PKt.out(user1.getClass().isAssignableFrom(User.class));
+            PKt.out(user1.getClass().isAssignableFrom(Person.class));
+
+            PKt.out(person.getClass().isAssignableFrom(User.class));
+            PKt.out(person.getClass().isAssignableFrom(Person.class));
+
+            PKt.out(absPerson.getClass().isAssignableFrom(User.class));
+            PKt.out(absPerson.getClass().isAssignableFrom(Person.class));
+
+            PKt.out("--------------2---------------");
+
+            PKt.out(Object.class.isAssignableFrom(user.getClass()));
+            PKt.out(Object.class.isAssignableFrom(person.getClass()));
+            PKt.out(Object.class.isAssignableFrom("a".getClass()));
+
+            PKt.out("abc".getClass().isAssignableFrom(Object.class));
+
+            PKt.out("-------------end--------------");
+
+            PKt.out(User.class.isInterface());
+            PKt.out(User.IUserData.class.isInterface());
+
+            PKt.out("-------------others-------------");
+            PKt.out(User.class.isArray());
+
+            PKt.out(User.class.isPrimitive());
+
+            PKt.out("-----------annotation--------------");
+            // annotation
+            PKt.out(User.UserType.class.isAnnotation());
+            PKt.out(User.class.isAnnotation());
 
 
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-
     }
+
+
 
     private static void reflectPrivateMethod() {
         try {

@@ -2,7 +2,12 @@ package com.java_simple.codes.reflect;
 
 import com.java_simple.codes.PKt;
 
-public class User {
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+public class User extends Person{
     private final String TAG = this.getClass().getSimpleName();
 
     private int userId;
@@ -56,8 +61,6 @@ public class User {
                 '}';
     }
 
-
-
     public class VipData{
 
     }
@@ -67,6 +70,12 @@ public class User {
     }
 
     public interface IUserData{
+
+    }
+
+    @Target(ElementType.METHOD)
+    @Retention(RetentionPolicy.RUNTIME)
+    public @interface UserType{
 
     }
 }
